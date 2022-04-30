@@ -2,11 +2,11 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-filename = 'data2.json'
-json_data = open(filename, encoding="utf8").read()
-data = json.loads(json_data)
+filename = 'data2.json' # Le nom du fichier
+json_data = open(filename, encoding="utf8").read() # ouvre le fichier
+data = json.loads(json_data) # charge le fichier json
 
-
+G = nx.Graph() # Crée un graphe vide
 
 def clearNom(nom):
   if nom[0] == '[':
@@ -20,13 +20,12 @@ def clearNom(nom):
 
 
 def tout_les_gens_du_film(titre):
-  list=[]
+  list=[] 
   for film in range(len(data)):
     if data[film]["title"] == titre:
       for gens in data[film]["cast"]:
-        gens = clearNom(gens) 
-        
-        list.append(gens) 
+        gens = clearNom(gens)  # On supprime les [] et le |
+        list.append(gens) # On ajoute le gens à la liste
   return list
 
 def principal(la_data):
@@ -35,32 +34,13 @@ def principal(la_data):
     liste = tout_les_gens_du_film(la_data[film]["title"])
     for gens in liste:
       if gens not in dico_de_gens:
-        dico_de_gens[gens] = []
+        dico_de_gens[gens] = [] # Si la personne(gens) n'est pas dans le dico, on l'ajoute
       for personne in liste:
+        G.add_node(personne) # On ajoute la personne à la liste des nodes
         if personne != gens:
-          dico_de_gens[gens].append(personne)
+          dico_de_gens[gens].append(personne) # On ajoute la personne à la liste des collaborateurs de la personne
   return dico_de_gens        
 
 
-
-
-def clearDoublon(dico):
-  for cle in dico:
-    dico[cle] = list(set(dico[cle])) # On supprime les doublons
-  return dico
-
-
-dico_final = clearDoublon(principal(data)) # dico final avec les doublons en moins
-
-print(dico_final)
-
-G = nx.Graph()
-
-for elem in dico_final:
-  G.add_node(elem)
-  
-for elem in dico_final:
-  for elem2 in dico_final[elem]:
-    G.add_edge(elem,elem2)
-
-nx.draw(G,with_labels=True)      
+def lancer():
+  dico_final = principal(data) # On récupère le dico
