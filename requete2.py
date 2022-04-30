@@ -1,8 +1,4 @@
-import lecture
-import json
-filename = 'data2.json' # Le nom du fichier
-json_data = open(filename, encoding="utf8").read() # ouvre le fichier
-data = json.loads(json_data) # charge le fichier json
+import lecture4
 
 def collaborateur_en_commun(nom1, nom2, G):
     """
@@ -14,4 +10,5 @@ def collaborateur_en_commun(nom1, nom2, G):
         liste.append(nom)
     return liste
 
-#print(collaborateur_en_commun("Núria Espert","Rosa Maria Sardà", lecture.principal(data)))
+#print(collaborateur_en_commun("Núria Espert","Rosa Maria Sardà", lecture4.principal(lecture4.getData())[0]))
+
