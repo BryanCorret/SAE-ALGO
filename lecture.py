@@ -18,29 +18,38 @@ def clearNom(nom):
     nom = nom[indice:] # Ce code permet de supprimer tt ce qui y'a avant le |  
   return nom  
 
-
-def tout_les_gens_du_film(titre):
-  list=[] 
-  for film in range(len(data)):
-    if data[film]["title"] == titre:
-      for gens in data[film]["cast"]:
-        gens = clearNom(gens)  # On supprime les [] et le |
-        list.append(gens) # On ajoute le gens à la liste
-  return list
-
 def principal(la_data):
   dico_de_gens = dict() 
-  for film in range(len(la_data)):
-    liste = tout_les_gens_du_film(la_data[film]["title"])
-    for gens in liste:
+  dico_dacteur_de_chaque_film = dict()
+  for film in la_data:
+    if film["title"] not in dico_dacteur_de_chaque_film:
+      dico_dacteur_de_chaque_film[film["title"]] = [] # Si le film n'est pas dans le dico, on l'ajoute
+    for acteur in film["cast"]:
+      dico_dacteur_de_chaque_film[film["title"]].append(clearNom(acteur)) # On ajoute l'acteur à la liste du film
+    for gens in dico_dacteur_de_chaque_film[film["title"]]:
       if gens not in dico_de_gens:
         dico_de_gens[gens] = [] # Si la personne(gens) n'est pas dans le dico, on l'ajoute
-      for personne in liste:
+      for personne in dico_dacteur_de_chaque_film[film["title"]]:
         G.add_node(personne) # On ajoute la personne à la liste des nodes
         if personne != gens:
           dico_de_gens[gens].append(personne) # On ajoute la personne à la liste des collaborateurs de la personne
-  return dico_de_gens        
+  return dico_de_gens 
+  
+def dessiner(dico,G):
+  """
+  Dessine le graph
+  """
+  for elem in dico:
+    for elem2 in dico[elem]:
+      G.add_edge(elem,elem2)
 
+  nx.draw(G,with_labels=True)
+  plt.show()
+  # return G      
 
-def lancer():
+def lancer(data):
   dico_final = principal(data) # On récupère le dico
+  dessiner(dico_final,G)
+  # return dico_final
+
+print(lancer(data))
