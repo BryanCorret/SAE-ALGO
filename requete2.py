@@ -1,4 +1,4 @@
-import lecture4
+import lecture
 
 def collaborateur_en_commun(nom1, nom2, G):
     """
