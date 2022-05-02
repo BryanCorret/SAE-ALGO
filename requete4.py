@@ -1,7 +1,5 @@
 import json
-from math import degrees
 import networkx as nx
-import matplotlib.pyplot as plt
 
 filename = 'data2.json'
 json_data = open(filename, encoding="utf8").read()
@@ -18,39 +16,34 @@ def clearNom(nom):
         nom = nom[indice:]
     return nom
 
-def clearDoublon(dico):
-  for cle in dico:
-    dico[cle] = list(set(dico[cle])) # On supprime les doublons
-  return dico
-
-def tout_les_gens_du_film(titre):
-  list=[]
-  for film in range(len(data)):
-    if data[film]["title"] == titre:
-      for gens in data[film]["cast"]:
-        gens = clearNom(gens) 
-        
-        list.append(gens) 
-  return list
 
 def principal(la_data):
   dico_de_gens = dict() 
-  for film in range(len(la_data)):
-    liste = tout_les_gens_du_film(la_data[film]["title"])
-    for gens in liste:
+  dico_dacteur_de_chaque_film = dict()
+  for film in la_data:
+    if film["title"] not in dico_dacteur_de_chaque_film:
+      dico_dacteur_de_chaque_film[film["title"]] = [] # Si le film n'est pas dans le dico, on l'ajoute
+    for acteur in film["cast"]:
+      dico_dacteur_de_chaque_film[film["title"]].append(clearNom(acteur)) # On ajoute l'acteur à la liste du film
+    for gens in dico_dacteur_de_chaque_film[film["title"]]:
       if gens not in dico_de_gens:
-        dico_de_gens[gens] = []
-      for personne in liste:
+        dico_de_gens[gens] = [] # Si la personne(gens) n'est pas dans le dico, on l'ajoute
+      for personne in dico_dacteur_de_chaque_film[film["title"]]:
+        G.add_node(personne) # On ajoute la personne à la liste des nodes
         if personne != gens:
-          dico_de_gens[gens].append(personne)
-  return dico_de_gens  
+          dico_de_gens[gens].append(personne) # On ajoute la personne à la liste des collaborateurs de la personne
 
+  for elem in dico_de_gens:
+    for elem2 in dico_de_gens[elem]:
+      G.add_edge(elem,elem2)
+  return (dico_de_gens,G)
 
-dico_final = clearDoublon(principal(data)) # dico final avec les doublons en moins
+G = nx.Graph() 
+
+dico_final = principal(data)[0] # dico final avec les doublons en moins
 # renvoie le nom des gens avec qui il on travailler
 
 
-G = nx.Graph() 
 
 # Centralité IL faut
 # calucle l'élgoinement de chaque point
@@ -90,13 +83,6 @@ for key,values in dico_moy.items():
     if mini == values:
         liste_point_centralite.append(key)
 print(f"Le ou les points centralites sont : {liste_point_centralite}")
-
-        
-
-        
-
-
-
 
 for elem in dico_final:
   for elem2 in dico_final[elem]:
