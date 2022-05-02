@@ -2,7 +2,7 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-filename = 'data3.json' # Le nom du fichier
+filename = 'data2Modifie.json' # Le nom du fichier
 json_data = open(filename, encoding="utf8").read() # ouvre le fichier
 data = json.loads(json_data) # charge le fichier json
 
@@ -59,6 +59,6 @@ def lancer(data):
   
   dico_final = principal(getData())[0] # On récupère le dico
   dessiner() # On dessine le graphe
-  #return dico_final
+  return dico_final
 
 print(lancer(data))
