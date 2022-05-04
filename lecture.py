@@ -2,7 +2,7 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-filename = 'data2Modifie.json' # Le nom du fichier
+filename = 'data3.json' # Le nom du fichier
 json_data = open(filename, encoding="utf8").read() # ouvre le fichier
 data = json.loads(json_data) # charge le fichier json
 
@@ -22,6 +22,10 @@ def clearNom(nom):
     indice = nom.find("|") # Ce code permet de trouver le |
     indice+=1 # Ce code permet de décaler le curseur
     nom = nom[indice:] # Ce code permet de supprimer tt ce qui y'a avant le |  
+  if "<" in nom:
+    indice = nom.find("<") # Ce code permet de trouver le <
+    indice-=1 # Ce code permet de décaler le curseur
+    nom = nom[:indice] # Ce code permet de supprimer tt ce qui y'a après le <
   return nom  
 
 def principal(la_data):
@@ -30,7 +34,10 @@ def principal(la_data):
   """
   dico_de_gens = dict() 
   dico_dacteur_de_chaque_film = dict()
+  cpt=0
   for film in la_data:
+    cpt+=1
+    print(cpt)
     if film["title"] not in dico_dacteur_de_chaque_film:
       dico_dacteur_de_chaque_film[film["title"]] = [] # Si le film n'est pas dans le dico, on l'ajoute
     for acteur in film["cast"]:
@@ -49,7 +56,7 @@ def principal(la_data):
   return (dico_de_gens,G)
 
 def dessiner():
-  nx.draw(G,with_labels=True)
+  nx.draw(G)
   plt.show()
 
 def lancer(data):
@@ -58,7 +65,5 @@ def lancer(data):
   """
   
   dico_final = principal(getData())[0] # On récupère le dico
-  dessiner() # On dessine le graphe
-  return dico_final
-
-print(lancer(data))
+  #dessiner() # On dessine le graphe
+  #return dico_final
