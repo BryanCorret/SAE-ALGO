@@ -2,7 +2,7 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-filename = 'data_exploitable.json' # Le nom du fichier
+filename = 'data3.json' # Le nom du fichier
 json_data = open(filename, encoding="utf8").read() # ouvre le fichier
 data = json.loads(json_data) # charge le fichier json
 

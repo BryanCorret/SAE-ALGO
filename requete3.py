@@ -14,10 +14,10 @@ def distance(G,u,v):
   val = chemin_le_plus_court[u][v] # On récupère la valeur de la distance entre u et v
   return val
 
-  collab1 = collaborateurs.collaborateurs_proches(G,u,val)
-  if v in collab1:
-    return val
+  # collab1 = collaborateurs.collaborateurs_proches(G,u,val)
+  # if v in collab1:
+  #   return val
 
 
-print(distance(lecture.principal(lecture.getData())[1],"Rosa Maria Sardà","Jack Palance"))
+#print(distance(lecture.principal(lecture.getData())[1],"Rosa Maria Sardà","Jack Palance"))
 
