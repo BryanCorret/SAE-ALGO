@@ -1,4 +1,4 @@
-import lecture4
+import lecture
 
 
 def collaborateurs_proches(G,u,k):

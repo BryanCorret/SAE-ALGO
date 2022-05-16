@@ -19,5 +19,5 @@ def distance(G,u,v):
     return val
 
 
-print(distance(lecture4.principal(lecture4.getData())[1],"Rosa Maria Sardà","Bryan C"))
+print(distance(lecture.principal(lecture.getData())[1],"Rosa Maria Sardà","Jack Palance"))
 

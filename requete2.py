@@ -14,5 +14,5 @@ def collaborateur_en_commun(nom1, nom2, G):
         liste.append(nom)
     return liste
 
-#print(collaborateur_en_commun("Núria Espert","Rosa Maria Sardà", lecture4.principal(lecture4.getData())[0]))
+#print(collaborateur_en_commun("Núria Espert","Rosa Maria Sardà", lecture.principal(lecture.getData())[0]))
 
