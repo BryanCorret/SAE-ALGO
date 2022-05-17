@@ -9,6 +9,8 @@ def collaborateur_en_commun(nom1, nom2, G):
     :param G: le graphe
     """
     liste = []
+    if nom1 not in G or nom2 not in G:
+      return None
     for nom in G[nom1]:
       if nom in G[nom2]:
         liste.append(nom)

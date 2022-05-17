@@ -14,13 +14,16 @@ def collaborateurs_proches(G,u,k):
         return None
     collaborateurs = set()
     collaborateurs.add(u)
+    cpt= 0
     for i in range(k):
+        cpt +=1
         collaborateurs_directs = set()
         for c in collaborateurs:
             for voisin in G.adj[c]:
                 if voisin not in collaborateurs:
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
-    return collaborateurs
+        if cpt == len(G.nodes):
+            return cpt
     
 #print(collaborateurs_proches(lecture4.principal(lecture4.getData())[1],"NOM,2))

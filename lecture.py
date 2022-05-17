@@ -2,7 +2,7 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-filename = 'data3.json' # Le nom du fichier
+filename = 'data2.json' # Le nom du fichier
 json_data = open(filename, encoding="utf8").read() # ouvre le fichier
 data = json.loads(json_data) # charge le fichier json
 
@@ -37,7 +37,7 @@ def principal(la_data):
   cpt=0
   for film in la_data:
     cpt+=1
-    print(cpt)
+    #print(cpt)
     if film["title"] not in dico_dacteur_de_chaque_film:
       dico_dacteur_de_chaque_film[film["title"]] = [] # Si le film n'est pas dans le dico, on l'ajoute
     for acteur in film["cast"]:
@@ -56,8 +56,11 @@ def principal(la_data):
   return (dico_de_gens,G)
 
 def dessiner():
-  nx.draw(G)
-  plt.show()
+  try :
+    nx.draw(G, with_labels=True)
+    plt.show()
+  except:
+    print("Erreur dans le dessin du graph, si vous avez lancé le data_exploitable, le fichier étant trop lourd, le dessin n'est pas possible")  
 
 def lancer(data):
   """
