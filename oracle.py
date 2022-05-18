@@ -12,44 +12,29 @@ def affichage():
 
         if num == "1":
             filename = 'data_exploitable.json'
-            json_data = open(filename, encoding="utf8").read() 
-            data = json.loads(json_data) 
-            print("Le fichier est en cours de lecture, Veuillez patienter...")
-            resultat = requetes.json_vers_nx(data)
             stop = True
 
-        if num == "2":
+        elif num == "2":
             filename = 'data2.json'
-            json_data = open(filename, encoding="utf8").read() 
-            data = json.loads(json_data) 
-            print("Le fichier est en cours de lecture, Veuillez patienter...")
-            resultat = requetes.json_vers_nx(data)
             stop = True
 
-        if num == "3":
+        elif num == "3":
             filename = 'data3.json'
-            json_data = open(filename, encoding="utf8").read() 
-            data = json.loads(json_data) 
-            print("Le fichier est en cours de lecture, Veuillez patienter...")
-            resultat = requetes.json_vers_nx(data)
             stop = True
 
-        if num == "4":
-            filename = 'data4.json'
-            json_data = open(filename, encoding="utf8").read() 
-            data = json.loads(json_data) 
-            print("Le fichier est en cours de lecture, Veuillez patienter...")
-            resultat = requetes.json_vers_nx(data)            
+        elif num == "4":
+            filename = 'data4.json' 
             stop = True
 
-        if num == "5":
+        elif num == "5":
             filename = 'data5.json'
-            json_data = open(filename, encoding="utf8").read() 
-            data = json.loads(json_data) 
-            print("Le fichier est en cours de lecture, Veuillez patienter...")
-            resultat = requetes.json_vers_nx(data)
             stop = True
-
+    
+    json_data = open(filename, encoding="utf8").read() 
+    data = json.loads(json_data) 
+    print("Le fichier est en cours de lecture, Veuillez patienter...")
+    resultat = requetes.json_vers_nx(data)
+    
     os.system('clear||cls')
     fini = False
     print("Le fichier étant chargé, veuillez choisir l'action que vous souhaitez effectuer: ")
@@ -66,12 +51,12 @@ def affichage():
         choix = input("Numéro de l'action que vous souhaitez effectuer: ")
         if choix == "1":
             os.system('clear||cls')
-            print("Voici le graphe: ")
+            print("Voici le graphe: (Une interface à du normalement s'ouvrir)")
             requetes.dessiner()
 
 
 
-        if choix == "2":
+        elif choix == "2":
             os.system('clear||cls')
             nom1 = input("Veuillez entrer le nom de l'acteur 1: ")
             nom2 = input("Veuillez entrer le nom de l'acteur 2: ")
@@ -84,7 +69,7 @@ def affichage():
             print("\n")
 
 
-        if choix == "3":
+        elif choix == "3":
             os.system('clear||cls')
             nom1 = input("Veuillez entrer le nom de l'acteur 1: ")
             nom2 = input("Veuillez entrer le nom de l'acteur 2: ")
@@ -100,14 +85,14 @@ def affichage():
 
 
 
-        if choix == "4":
+        elif choix == "4":
             os.system('clear||cls')
             print("Voici l’acteur le plus central du graphe: ")
             res = requetes.centre_hollywood(resultat[0])
             print(res)    
             
                 
-        if choix == "5":
+        elif choix == "5":
             os.system('clear||cls')
             fini = True
             print("Au revoir !")    
