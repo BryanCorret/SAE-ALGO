@@ -3,6 +3,7 @@
 import json
 import networkx as nx
 import matplotlib.pyplot as plt
+import lecture 
 
 # ---------------  Fonction utiles pour les requetes  -----------------------------
 
@@ -108,36 +109,80 @@ def distance(G,u,v):
 
 #Q4
 def centre_hollywood(dico_final):
-  dico_centralite = dict()
+  """
 
-  for elem in dico_final:
-      for elem2 in dico_final[elem]:
+    Args:
+        dico_final (dict): Dico qui contient tout les données du graphe
+
+    Returns:
+        List: Liste de le ou les personne qui sont au centre du graphe
+    """
+  dico_centralite = dict() # dico qui contient les centralites sous form Nom Prenom : [1 2 3  ....] 
+
+  for elem in dico_final: # Pour chaque personne 
+      for elem2 in dico_final[elem]: # Pour chaque personne qui a travaillé avec la personne
           dico_centralite[elem2] = []
           n = 2
           for elem3 in dico_final[elem2]:
               dico_centralite[elem2].append(1)
-          for elem3 in dico_final[elem2]:
+          for elem3 in dico_final[elem2]: 
               dico_centralite[elem2].append(n)
               n += 1
 
 
   dico_moy = dict()
-  for key in dico_centralite:
-      somme = 0
+  for key in dico_centralite: # Pour chaque personne 
+      somme = 0 # Somme des centralites
       dico_moy[key] = 0
-      for val in dico_centralite[key]:
+      for val in dico_centralite[key]: # On fait la somme du nombre de movement qu'on peut faire
           somme = somme + val
-      moy = somme / len(dico_centralite[key])
+      moy = somme / len(dico_centralite[key]) # On fait la moyenne
       dico_moy[key]= moy
       somme = 0
 
   liste_point_centralite = []
-  for key,values in dico_moy.items(): 
-    mini = min(dico_moy.values())
-    if mini == values:
-      liste_point_centralite.append(key)
+  mini = min(dico_moy.values()) # On cherche la valeur minimale ( boucle car peut y avoir plusieurs personne avec la meme valeur)
+  for key,values in dico_moy.items():  # Pour chaque personne de mon dico avec les moyennes 
+      if mini == values: # Si la valeur est égale à la valeur minimale
+          liste_point_centralite.append(key) # On ajoute la personne à la liste des personnes avec la meme valeur
+
+  
+
+  return liste_point_centralite # On retourne la liste des personnes 
+
 
     
-    
-  key_min = min(dico_moy.keys(), key=(lambda k: dico_moy[k]))
-  return key_min  
+# Q5
+def eloignement_max(G):
+    """Fonction permettant de determiner la distance maximum dans G entre deux acteurs.
+    Parametres:
+        G: le graphe
+    return:
+        int : la distance maximum
+    """
+    def distance_max(G,u,):
+        """Fonction permettant de determiner la distance maximum dans G entre deux acteurs.
+        Args:
+            G: le graphe
+            u: le premier acteur
+        return:
+            int : la distance maximum
+        """ 
+        L_distant = list()
+        for sommet in G.nodes: # Pour chaque sommet du graphe
+          L_distant.append(distance(G, u, sommet)) # On ajoute la distance entre u et le sommet dans la liste
+        return max(L_distant) # On retourne la valeur maximale de la liste
+
+  
+
+    L_centralite = list()
+    L_sommet = list()
+    for sommet in G.nodes: # Pour chaque sommet du graphe
+        L_centralite.append(distance_max(G, sommet)) # On ajoute la distance max entre le sommet et les autres dans la liste
+        L_sommet.append(sommet) # On ajoute le sommet dans la liste
+
+    return max(L_centralite) # On retourne la valeur maximale de la liste
+   
+
+
+
